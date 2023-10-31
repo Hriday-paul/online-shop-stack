@@ -10,11 +10,12 @@ import HandleContext from "./Component/HandleContext/HandleContext";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <HandleContext>
-      <Authonicate>
+    <Authonicate>
+      <HandleContext>
         <RouterProvider router={Router} />
-      </Authonicate>
-    </HandleContext>
+      </HandleContext>
+    </Authonicate>
+
 
   </React.StrictMode>
 );

@@ -1,72 +1,68 @@
 import { MdWifiCalling2, MdEmail, MdOutlineLocationOn, MdShoppingCartCheckout } from 'react-icons/md';
 import { FcBusinessman, FcLike } from 'react-icons/fc';
-import { RiMenu3Line } from 'react-icons/ri';
+import { RiMenu3Line, RiArrowDropDownLine } from 'react-icons/ri';
 import { BiLogInCircle, BiLogIn, BiSolidUserAccount } from 'react-icons/bi';
 import { Link, NavLink } from 'react-router-dom';
 import { RxCross2 } from 'react-icons/rx';
-import { MdOutlineArrowDropDown } from 'react-icons/md';
-// import { useContext, useEffect, useState } from 'react';
-// import { getLocalData } from '../../LocalStore';
-// import { CardContext } from '../../Component/HandleContext/HandleContext';
+import { useContext, useState } from 'react';
+import { CardContext } from '../../Component/HandleContext/HandleContext';
+import { authContext } from '../../Component/Authonicate/Authonicate';
+import { useEffect } from 'react';
+import { HiOutlineBars3 } from 'react-icons/hi2';
 
 
 function Navbar() {
-    // const { localUpdate } = useContext(CardContext);
-    // const [cart, setCart] = useState(localUpdate)
-    // useEffect(()=>{
-    //     setCart(localUpdate)
-    //     console.log(localUpdate)
-    // }, [localUpdate])
-
-    // const fetchData = (id) => {
-    //     fetch(`https://online-shop-server-f69l.onrender.com/api/product/${id}`)
-    //         .then((res) => res.json())
-    //         .then((data) => cart.push(data.data));
-    // };
-
+    let { cartProducts, getCartProduct, deleteCart } = useContext(CardContext);
+    const { userInfo } = useContext(authContext)
+    const [slide, setSlide] = useState(false)
+    useEffect(() => {
+        if (userInfo) {
+            getCartProduct(userInfo.email)
+        }
+    }, [userInfo])
     return (
         <div className=''>
             <div className='max-w-7xl mx-auto'>
                 <div className='container mx-auto px-4 md:px-0 py-5'>
                     <div className='flex flex-col gap-y-4 lg:flex-row justify-between items-center'>
                         <div className='flex gap-x-2items-center'>
-                            <div className='flex gap-x-2 items-center border-r border-r-gray-400 px-3 text-sm font-medium'>
-                                <MdWifiCalling2 className='text-orange-400 text-lg'></MdWifiCalling2>
-                                <p>+060 (800) 801-582</p>
+                            <div className='flex gap-x-1 items-center border-r border-r-gray-400 px-2 md:px-3 font-medium'>
+                                <MdWifiCalling2 className='text-orange-400 text-xs md:text-sm'></MdWifiCalling2>
+                                <p className='text-sm'>+060 (800) 801-582</p>
                             </div>
-                            <div className='flex items-center gap-x-2 px-3 text-sm'>
-                                <MdEmail className='text-orange-400 text-lg'></MdEmail>
+                            <div className='flex items-center gap-x-2 px-2 md:px-3 text-sm'>
+                                <MdEmail className='text-orange-400 text-xs md:text-sm'></MdEmail>
                                 <p>support@shophub.com</p>
                             </div>
                         </div>
-                        <div className='flex gap-x-2 items-center'>
-                            <div className='border-r border-r-gray-400 pr-3 text-sm'>
-                                <Link className='flex items-center gap-x-2 hover:text-orange-400 duration-300'>
-                                    <MdOutlineLocationOn className='text-orange-400 text-lg'></MdOutlineLocationOn>
-                                    <p>location</p>
+                        <div className='flex items-center'>
+                            <div className='border-r border-r-gray-400 pr-2 text-sm'>
+                                <Link to="/" className='flex items-center gap-x-1 hover:text-orange-400 duration-300'>
+                                    <MdOutlineLocationOn className='text-orange-400 text-sm md:text-lg'></MdOutlineLocationOn>
+                                    <p className='text-sm md:text-base'>location</p>
                                 </Link>
                             </div>
                             <div className='flex items-center border-r-gray-400 text-sm'>
-                                <div className='border-r border-r-gray-400 px-3 text-sm'>
-                                    <Link to="/account" className='flex gap-x-2 items-center hover:text-orange-400 duration-300'>
-                                        <FcBusinessman className='text-orange-400 text-lg'></FcBusinessman>
-                                        <p>My account</p>
+                                <div className='border-r border-r-gray-400 px-1 md:px-2 text-sm'>
+                                    <Link to="/account" className='flex gap-x-1 items-center hover:text-orange-400 duration-300'>
+                                        <FcBusinessman className='text-orange-400 text-sm md:text-lg'></FcBusinessman>
+                                        <p className='text-sm md:text-base'>My account</p>
                                     </Link>
                                 </div>
                             </div>
                             <div className='flex items-center border-r border-r-gray-400  text-sm'>
-                                <div className='border-r-gray-400 px-3 text-sm'>
-                                    <Link to="/login" className='flex gap-x-2 items-center hover:text-orange-400 duration-300'>
-                                        <BiLogInCircle className='text-orange-400 text-lg'></BiLogInCircle>
-                                        <p>Login</p>
+                                <div className='border-r-gray-400 px-1 md:px-2 text-sm'>
+                                    <Link to="/login" className='flex gap-x-1 items-center hover:text-orange-400 duration-300'>
+                                        <BiLogInCircle className='text-orange-400 text-sm md:text-lg'></BiLogInCircle>
+                                        <p className='text-sm md:text-base'>Login</p>
                                     </Link>
                                 </div>
                             </div>
                             <div className='flex items-center border-r border-r-gray-400 text-sm'>
-                                <div className='px-3 text-sm'>
-                                    <Link to="/register" className='flex gap-x-2 items-center hover:text-orange-400 duration-300'>
-                                        <BiLogIn className='text-orange-400 text-lg'></BiLogIn>
-                                        <p>Register</p>
+                                <div className='px-1 md:px-2 text-sm'>
+                                    <Link to="/register" className='flex gap-x-1 items-center hover:text-orange-400 duration-300'>
+                                        <BiLogIn className='text-orange-400 text-sm md:text-lg'></BiLogIn>
+                                        <p className='text-sm md:text-base'>Register</p>
                                     </Link>
                                 </div>
                             </div>
@@ -95,29 +91,34 @@ function Navbar() {
                             </div>
                         </div>
                         <div className='flex justify-end items-center'>
-                            <div className='relative group flex items-center justify-center mr-5'>
-                                <Link to="/" className='mr-5'><FcLike className='text-4xl text-orange-600 p-2 border-orange-600 hover:bg-orange-600 hover:text-white duration-200 rounded-full border'></FcLike></Link>
+                            <div className='relative group flex items-center justify-center mr-3'>
+                                <Link to="/" className='mr-2'><FcLike className='text-4xl text-orange-600 p-2 border-orange-600 hover:bg-orange-600 hover:text-white duration-200 rounded-full border'></FcLike></Link>
                             </div>
-                            <div className='relative group flex items-center justify-center mr-5'>
-                                <Link to="/" className='mr-5'><BiSolidUserAccount className='text-4xl text-orange-600 hover:bg-orange-600 hover:text-white duration-200 p-2 border-orange-600 rounded-full border'></BiSolidUserAccount></Link>
+                            <div className='relative group flex items-center justify-center mr-3'>
+                                <Link to="/" className='mr-2'><BiSolidUserAccount className='text-4xl text-orange-600 hover:bg-orange-600 hover:text-white duration-200 p-2 border-orange-600 rounded-full border'></BiSolidUserAccount></Link>
                             </div>
-                            <div className='relative group flex items-center justify-center mr-5'>
-                                <Link to="/mycart" className=''><MdShoppingCartCheckout className='text-4xl text-orange-600 p-2 border-orange-600 hover:bg-orange-600 hover:text-white duration-200 rounded-full border'></MdShoppingCartCheckout></Link>
-                                <div className='absolute top-0  group-hover:mt-9 right-0 duration-200 bg-white border z-50 p-5 w-60 hidden'>
-                                    <div className='flex justify-between pb-3 border-b-2'>
-                                        <p>2 items</p>
-                                        <Link className='hover:text-orange-400' to="/mycart">view cart</Link>
+                            <div className='relative group flex items-center justify-center mr-3'>
+                                <div className='cursor-pointer'><MdShoppingCartCheckout className='text-4xl text-orange-600 p-2 border-orange-600 hover:bg-orange-600 hover:text-white duration-200 rounded-full border'></MdShoppingCartCheckout></div>
+                                <div className='absolute top-0 mt-14 group-hover:mt-9 right-0 transition duration-700 bg-white border z-50 p-3 w-60 hidden group-hover:inline shadow-2xl'>
+                                    <div className='flex justify-between pb-1 border-b-2'>
+                                        <p>{cartProducts.length} items</p>
+                                        {cartProducts.length>0 ? <Link className='text-orange-400 hover:text-orange-500 duration-150' to="/mycart">view cart</Link> : <p>No cart</p>}
                                     </div>
-                                    {/* {console.log(cart)} */}
-                                    <div className='grid grid-cols-2 justify-between items-center py-2 border-b-2'>
-                                        <div className=''>
-                                            <h1 className='text-base font-medium'>product name</h1>
-                                            <p className='text-xs font-mono'>$565757</p>
-                                            <RxCross2 className='border border-black mt-3 hover:bg-black hover:text-white duration-200 p-1 text-xl cursor-pointer'></RxCross2>
-                                        </div>
-                                        <img src="" alt="" />
-                                    </div>
-                                    <button className="hover:border-white/40 w-full hover:bg-orange-400 flex items-center justify-center rounded-md border border-transparent bg-orange-500 px-5 py-2.5 text-center text-sm font-medium text-white focus:outline-none focus:ring-4 duration-200 focus:ring-orange-600 mt-2">Checkout</button>
+                                    {
+                                        cartProducts && cartProducts.map((cart) => {
+                                            return <div key={cart.id} className='grid grid-cols-2 justify-between items-center p-2 border-b-2'>
+                                                <div className=''>
+                                                    <Link to={`/product/${cart.id}`} className='text-xs font-normal hover:text-orange-400 duration-200'>{cart.product_model}</Link>
+                                                    <p className='text-xs font-bold'>{cart.price} $</p>
+                                                    <RxCross2 onClick={() => deleteCart(cart.id)} className='border border-black mt-1 hover:bg-black hover:text-white duration-200 p-1 text-xl cursor-pointer'></RxCross2>
+                                                </div>
+                                                <img className='h-16' src={`https://online-shop-server-f69l.onrender.com/api/getImage/${cart.id}`} alt="image" />
+                                            </div>
+                                        })
+                                    }
+                                    {
+                                        cartProducts.length>0 && <Link to="/checkout" className={`hover:border-white/40 w-full hover:bg-orange-400 flex items-center justify-center rounded-md border border-transparent bg-orange-500 px-5 py-2.5 text-center text-sm font-medium text-white focus:outline-none focus:ring-4 duration-200 focus:ring-orange-600 mt-2`}>Checkout</Link>
+                                    }
                                 </div>
                             </div>
                         </div>
@@ -126,68 +127,105 @@ function Navbar() {
             </div>
 
 
-
-            <div className='sticky top-5 z-40'>
-                <div className='bg-gray-900 px-4 md:pb-0 lg:px-0'>
-                    <nav className="max-w-7xl mx-auto z-20 left-0">
-                        <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto">
-                            <Link to={"/"} className='w-1/4 lg:w-1/4'>
-                                <NavLink to="/category" className='flex items-center gap-x-2 px-5 py-3 md:py-5 bg-orange-400 duration-300 text-white'>
-                                    <h1 className='text-xl font-medium'>See All</h1>
-                                    <RiMenu3Line className='text-xl'></RiMenu3Line>
-                                </NavLink>
-                            </Link>
-                            <div className="flex md:order-2">
-                                <button data-collapse-toggle="navbar-sticky" type="button" className="inline-flex items-center p-2 justify-center text-sm text-white rounded-lg md:hidden hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-700 duration-300" aria-controls="navbar-sticky" aria-expanded="false">
-                                    <span className="sr-only">Open main menu</span>
-                                    <svg className="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
-                                        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 1h15M1 7h15M1 13h15" />
-                                    </svg>
-                                </button>
-                            </div>
-                            <div className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-sticky">
-                                <ul className="flex flex-col p-4 md:p-0 mt-4 mb-5 md:mb-0 font-medium border border-gray-100 rounded-lg md:flex-row md:space-x-10 md:mt-0 md:border-0 py-5">
-                                    <li>
-                                        <Link to="/" className="block py-2 pl-3 text-white pr-4 border-b-2 border-orange-400 border-opacity-0 hover:border-opacity-100 hover:text-orange-400 duration-200 cursor-pointer">Home</Link>
-                                    </li>
-                                    <li>
-                                        <span className='relative group'>
-                                            <p className="flex items-center gap-x-1 py-2 pl-3 text-white pr-4  border-opacity-0 hover:border-opacity-100 hover:text-orange-400 duration-200 cursor-pointer">Products<MdOutlineArrowDropDown className="text-2xl group-hover:rotate-180 duration-200"></MdOutlineArrowDropDown></p>
-                                            <div className='absolute hidden group-hover:grid grid-cols-2 gap-x-3 justify-between items-center w-72 top-0 bg-gray-100 rounded rounded-t-none border-t-4 border-t-orange-600 mt-[40px]'>
-                                                <NavLink to="/category/Smart phone" className={({ isActive }) => isActive ? " duration-200 px-6 py-3 border-r-2 bg-white border-orange-600 text-sm" : "hover:border-orange-600 hover:border-r-2 duration-100 px-6 py-3 hover:bg-white text-sm"
-                                                }>Smart Phone</NavLink>
-                                                <NavLink to="/category/Laptop" className={({ isActive }) => isActive ? " duration-200 px-6 py-3 border-r-2 bg-white border-orange-600 text-sm mt-2" : "hover:border-orange-600 hover:border-r-2 duration-100 px-6 py-3 hover:bg-white text-sm mt-2"
-                                                }>Laptop</NavLink>
-                                                <NavLink to="/category/Desktop" className={({ isActive }) => isActive ? " duration-200 px-6 py-3 border-r-2 bg-white border-orange-600 text-sm " : "hover:border-orange-600 hover:border-r-2 duration-100 px-6 py-3 hover:bg-white text-sm"
-                                                }>Desktop</NavLink>
-                                                <NavLink to="/category/Watch" className={({ isActive }) => isActive ? " duration-200 px-6 py-3 border-r-2 bg-white border-orange-600 text-sm mt-2" : "hover:border-orange-600 hover:border-r-2 duration-100 px-6 py-3 hover:bg-white text-sm mt-2"
-                                                }>Watch</NavLink>
-                                                <NavLink to="/category/T-Shirt" className={({ isActive }) => isActive ? " duration-200 px-6 py-3 border-r-2 bg-white border-orange-600 text-sm mt-2" : "hover:border-orange-600 hover:border-r-2 duration-100 px-6 py-3 hover:bg-white text-sm mt-2"
-                                                }>Shirt</NavLink>
-                                                <NavLink to="/category/Bag" className={({ isActive }) => isActive ? " duration-200 px-6 py-3 border-r-2 bg-white border-orange-600 text-sm mt-2" : "hover:border-orange-600 hover:border-r-2 duration-100 px-6 py-3 hover:bg-white text-sm mt-2"
-                                                }>Bag</NavLink>
-                                                <NavLink to="/category/Gift" className={({ isActive }) => isActive ? " duration-200 px-6 py-3 border-r-2 bg-white border-orange-600 text-sm mt-2" : "hover:border-orange-600 hover:border-r-2 duration-100 px-6 py-3 hover:bg-white text-sm mt-2"
-                                                }>Gift</NavLink>
-                                                <NavLink to="/category/Cosmetics" className={({ isActive }) => isActive ? " duration-200 px-6 py-3 border-r-2 bg-white border-orange-600 text-sm mt-2" : "hover:border-orange-600 hover:border-r-2 duration-100 px-6 py-3 hover:bg-white text-sm mt-2"
-                                                }>Cosmetics</NavLink>
-                                            </div>
-                                        </span>
-                                    </li>
-
-                                    <li>
-                                        <a className="block py-2 pl-3 text-white pr-4 border-b-2 border-orange-400 border-opacity-0 hover:border-opacity-100 hover:text-orange-400 duration-200 cursor-pointer">Service</a>
-                                    </li>
-                                    <li>
-                                        <a className="block py-2 pl-3 text-white pr-4 border-b-2 border-orange-400 border-opacity-0 hover:border-opacity-100 hover:text-orange-400 duration-200 cursor-pointer">Contact</a>
-                                    </li>
-                                </ul>
-                            </div>
+            <nav className="bg-gray-800  sticky top-0 z-40 mt-5">
+                <div className="max-w-7xl mx-auto px-4 md:px-0">
+                    <div className="grid grid-cols-4 justify-between items-center">
+                        <div className="col-span-1 bg-orange-400">
+                            <NavLink to="/category" className='flex items-center justify-between gap-x-2 px-5 py-3 md:py-5 bg-orange-400 duration-300 text-white'>
+                                <h1 className='text-lg md:text-xl font-medium'>See All</h1>
+                                <RiMenu3Line className='text-xl'></RiMenu3Line>
+                            </NavLink>
                         </div>
-                    </nav>
+                        <div className="hidden md:inline md:col-span-3">
+                            <ul className="flex gap-x-8 justify-center items-center">
+                                <li>
+                                    <Link to="/" className="block py-2 pl-3 text-white pr-4 border-b-2 border-orange-400 border-opacity-0 hover:border-opacity-100 hover:text-orange-400 duration-200 cursor-pointer">Home</Link>
+                                </li>
+                                <li>
+                                    <span className='relative group'>
+                                        <p className="flex items-center  py-2 pl-3 text-white pr-4  border-opacity-0 hover:border-opacity-100 hover:text-orange-400 duration-200 cursor-pointer">Categorys<RiArrowDropDownLine className="text-2xl group-hover:rotate-180 duration-300"></RiArrowDropDownLine></p>
+                                        <div className='absolute hidden group-hover:grid grid-cols-2 gap-x-3 justify-between items-center w-72 top-0 bg-gray-100 rounded rounded-t-none border-t-4 border-t-orange-600 mt-[40px]'>
+                                            <NavLink to="/category/Smart phone" className={({ isActive }) => isActive ? " duration-200 px-6 py-3 border-r-2 bg-white border-orange-600 text-sm" : "hover:border-orange-600 hover:border-r-2 duration-100 px-6 py-3 hover:bg-white text-sm"
+                                            }>Smart Phone</NavLink>
+                                            <NavLink to="/category/Laptop" className={({ isActive }) => isActive ? " duration-200 px-6 py-3 border-r-2 bg-white border-orange-600 text-sm mt-2" : "hover:border-orange-600 hover:border-r-2 duration-100 px-6 py-3 hover:bg-white text-sm mt-2"
+                                            }>Laptop</NavLink>
+                                            <NavLink to="/category/Desktop" className={({ isActive }) => isActive ? " duration-200 px-6 py-3 border-r-2 bg-white border-orange-600 text-sm " : "hover:border-orange-600 hover:border-r-2 duration-100 px-6 py-3 hover:bg-white text-sm"
+                                            }>Desktop</NavLink>
+                                            <NavLink to="/category/Watch" className={({ isActive }) => isActive ? " duration-200 px-6 py-3 border-r-2 bg-white border-orange-600 text-sm mt-2" : "hover:border-orange-600 hover:border-r-2 duration-100 px-6 py-3 hover:bg-white text-sm mt-2"
+                                            }>Watch</NavLink>
+                                            <NavLink to="/category/T-Shirt" className={({ isActive }) => isActive ? " duration-200 px-6 py-3 border-r-2 bg-white border-orange-600 text-sm mt-2" : "hover:border-orange-600 hover:border-r-2 duration-100 px-6 py-3 hover:bg-white text-sm mt-2"
+                                            }>Shirt</NavLink>
+                                            <NavLink to="/category/Bag" className={({ isActive }) => isActive ? " duration-200 px-6 py-3 border-r-2 bg-white border-orange-600 text-sm mt-2" : "hover:border-orange-600 hover:border-r-2 duration-100 px-6 py-3 hover:bg-white text-sm mt-2"
+                                            }>Bag</NavLink>
+                                            <NavLink to="/category/Gift" className={({ isActive }) => isActive ? " duration-200 px-6 py-3 border-r-2 bg-white border-orange-600 text-sm mt-2" : "hover:border-orange-600 hover:border-r-2 duration-100 px-6 py-3 hover:bg-white text-sm mt-2"
+                                            }>Gift</NavLink>
+                                            <NavLink to="/category/Cosmetics" className={({ isActive }) => isActive ? " duration-200 px-6 py-3 border-r-2 bg-white border-orange-600 text-sm mt-2" : "hover:border-orange-600 hover:border-r-2 duration-100 px-6 py-3 hover:bg-white text-sm mt-2"
+                                            }>Cosmetics</NavLink>
+                                        </div>
+                                    </span>
+                                </li>
+                                <li>
+                                    <Link to="/mycart" className="block py-2 pl-3 text-white pr-4 border-b-2 border-orange-400 border-opacity-0 hover:border-opacity-100 hover:text-orange-400 duration-200 cursor-pointer">My Cart</Link>
+                                </li>
+                                <li>
+                                    <a className="block py-2 pl-3 text-white pr-4 border-b-2 border-orange-400 border-opacity-0 hover:border-opacity-100 hover:text-orange-400 duration-200 cursor-pointer">Contact</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div className='md:hidden flex justify-end col-span-3'>
+                            {
+                                !slide && <HiOutlineBars3 className='text-2xl text-white cursor-pointer' onClick={() => setSlide(true)}></HiOutlineBars3>
+                            }
+                            {
+                                slide && <RxCross2 className='text-2xl text-white cursor-pointer' onClick={() => setSlide(false)}></RxCross2>
+                            }
+                        </div>
+                    </div>
                 </div>
-            </div>
+                {/* //mobile device */}
+                <div className={`absolute border-t border-gray-500 top-0 left-0 py-5 bg-gray-800 mt-20 md:mt-12 ${slide ? "w-full overflow-visible z-50" : "w-0 overflow-hidden"} duration-300`}>
+                    <div className='px-4'>
+                        <ul className="border border-white p-5 rounded-md">
+                            <li>
+                                <Link to="/" className="block py-2 pl-3 text-white pr-4 border-b-2 border-orange-400 border-opacity-0 hover:border-opacity-100 hover:text-orange-400 duration-200 cursor-pointer">Home</Link>
+                            </li>
+                            <li>
+                                <span className='relative group'>
+                                    <p className="flex items-center py-2 pl-3 text-white pr-4  border-opacity-0 hover:border-opacity-100 hover:text-orange-400 duration-200 cursor-pointer">Categorys<RiArrowDropDownLine className="text-2xl group-hover:rotate-180 duration-300"></RiArrowDropDownLine></p>
+                                    <div className='absolute hidden group-hover:grid grid-cols-2 gap-x-3 justify-between items-center w-72 top-0 bg-gray-100 rounded rounded-t-none border-t-4 border-t-orange-600 mt-[40px]'>
+                                        <NavLink to="/category/Smart phone" className={({ isActive }) => isActive ? " duration-200 px-6 py-3 border-r-2 bg-white border-orange-600 text-sm" : "hover:border-orange-600 hover:border-r-2 duration-100 px-6 py-3 hover:bg-white text-sm"
+                                        }>Smart Phone</NavLink>
+                                        <NavLink to="/category/Laptop" className={({ isActive }) => isActive ? " duration-200 px-6 py-3 border-r-2 bg-white border-orange-600 text-sm mt-2" : "hover:border-orange-600 hover:border-r-2 duration-100 px-6 py-3 hover:bg-white text-sm mt-2"
+                                        }>Laptop</NavLink>
+                                        <NavLink to="/category/Desktop" className={({ isActive }) => isActive ? " duration-200 px-6 py-3 border-r-2 bg-white border-orange-600 text-sm " : "hover:border-orange-600 hover:border-r-2 duration-100 px-6 py-3 hover:bg-white text-sm"
+                                        }>Desktop</NavLink>
+                                        <NavLink to="/category/Watch" className={({ isActive }) => isActive ? " duration-200 px-6 py-3 border-r-2 bg-white border-orange-600 text-sm mt-2" : "hover:border-orange-600 hover:border-r-2 duration-100 px-6 py-3 hover:bg-white text-sm mt-2"
+                                        }>Watch</NavLink>
+                                        <NavLink to="/category/T-Shirt" className={({ isActive }) => isActive ? " duration-200 px-6 py-3 border-r-2 bg-white border-orange-600 text-sm mt-2" : "hover:border-orange-600 hover:border-r-2 duration-100 px-6 py-3 hover:bg-white text-sm mt-2"
+                                        }>Shirt</NavLink>
+                                        <NavLink to="/category/Bag" className={({ isActive }) => isActive ? " duration-200 px-6 py-3 border-r-2 bg-white border-orange-600 text-sm mt-2" : "hover:border-orange-600 hover:border-r-2 duration-100 px-6 py-3 hover:bg-white text-sm mt-2"
+                                        }>Bag</NavLink>
+                                        <NavLink to="/category/Gift" className={({ isActive }) => isActive ? " duration-200 px-6 py-3 border-r-2 bg-white border-orange-600 text-sm mt-2" : "hover:border-orange-600 hover:border-r-2 duration-100 px-6 py-3 hover:bg-white text-sm mt-2"
+                                        }>Gift</NavLink>
+                                        <NavLink to="/category/Cosmetics" className={({ isActive }) => isActive ? " duration-200 px-6 py-3 border-r-2 bg-white border-orange-600 text-sm mt-2" : "hover:border-orange-600 hover:border-r-2 duration-100 px-6 py-3 hover:bg-white text-sm mt-2"
+                                        }>Cosmetics</NavLink>
+                                    </div>
+                                </span>
+                            </li>
+                            <li>
+                                <Link to="/mycart" className="block py-2 pl-3 text-white pr-4 border-b-2 border-orange-400 border-opacity-0 hover:border-opacity-100 hover:text-orange-400 duration-200 cursor-pointer">My Cart</Link>
+                            </li>
+                            <li>
+                                <Link to="/" className="block py-2 pl-3 text-white pr-4 border-b-2 border-orange-400 border-opacity-0 hover:border-opacity-100 hover:text-orange-400 duration-200 cursor-pointer">Service</Link>
+                            </li>
+                            <li>
+                                <Link to="/" className="block py-2 pl-3 text-white pr-4 border-b-2 border-orange-400 border-opacity-0 hover:border-opacity-100 hover:text-orange-400 duration-200 cursor-pointer">Contact</Link>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
 
-
+            </nav>
 
 
         </div>

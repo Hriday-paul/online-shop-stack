@@ -37,10 +37,10 @@ function Footer() {
                     <a href="https://www.facebook.com/hridaypaul585393/" className="inline-flex items-center justify-center h-8 w-8 border border-gray-600 rounded-full mr-1 hover:text-orange-400 hover:border-orange-400">
                         <BiLogoFacebook className="text-xl"></BiLogoFacebook>
                     </a>
-                    <a href="https://github.com/Hriday-paul" className="inline-flex items-center justify-center h-8 w-8 border border-gray-600 rounded-full mr-1 hover:text-orange-400 hover:border-orange-400">
+                    <a href="#" className="inline-flex items-center justify-center h-8 w-8 border border-gray-600 rounded-full mr-1 hover:text-orange-400 hover:border-orange-400">
                         <BsTwitter className="text-xl"></BsTwitter>
                     </a>
-                    <a href="#" className="inline-flex items-center justify-center h-8 w-8 border border-gray-600 rounded-full mr-1 hover:text-orange-400 hover:border-orange-400">
+                    <a href="https://github.com/Hriday-paul" className="inline-flex items-center justify-center h-8 w-8 border border-gray-600 rounded-full mr-1 hover:text-orange-400 hover:border-orange-400">
                         <DiGithubBadge className="text-xl"></DiGithubBadge>
                     </a>
                 </div>

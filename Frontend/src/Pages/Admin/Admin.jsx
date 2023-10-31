@@ -4,7 +4,6 @@ import 'sweetalert2/src/sweetalert2.scss'
 
 import { useEffect, useState } from "react";
 function Admin() {
-    const [allData, setAllData] = useState([])
     const [image, setImage] = useState("");
     const [loading, setLoading] = useState(false);
     const handleAlert = (message, icon) => {
@@ -47,7 +46,7 @@ function Admin() {
         form.append("description", description);
         form.append("categoryName", categoryName);
         
-        await axios.post("https://online-shop-server-f69l.onrender.com/api/postData", form)
+        axios.post("https://online-shop-server-f69l.onrender.com/api/postData", form)
             .then(res => {
                 if (res.data.status) {
                     setLoading(false)
@@ -71,16 +70,6 @@ function Admin() {
 
 
     }
-
-    //get all product
-    useEffect(() => {
-        axios.get("https://online-shop-server-f69l.onrender.com/api/category")
-            .then(res => {
-                if (res.data.status) {
-                    setAllData(res.data.datas)
-                }
-            })
-    }, [])
 
 
 
@@ -188,21 +177,11 @@ function Admin() {
 
 
                         <div className="flex justify-end mt-6">
-                            <button className="px-6 py-3 leading-5 text-white transition-colors duration-200 transform bg-light-blue-500 rounded-md hover:bg-light-blue-600 focus:outline-none w-full focus:bg-gray-600 uppercase font-bold">Save</button>
+                            <button className="px-6 py-3 leading-5 text-white transition-colors duration-200 transform bg-blue-500 rounded-md hover:bg-blue-600 focus:outline-none w-full focus:bg-gray-600 uppercase font-bold">Save</button>
                         </div>
                     </form>
 
-                    <div>
-                        {/* {
-                    allData && allData.map((item, id) => {
-                        return (
-                            <img src={`https://online-shop-server-f69l.onrender.com/api/getImage/${item.id}`} height={"100"} width={"100"} key={id} alt="img" />
-                        )
-                    })
-
-                } */}
-                        <h1>you added : {allData.length} data</h1>
-                    </div>
+                    
 
                 </section>
 

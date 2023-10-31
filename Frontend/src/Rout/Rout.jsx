@@ -13,6 +13,7 @@ import ProductSingle from "../Pages/ProductSingle/ProductSingle";
 import MyCart from "../Pages/MyCart/MyCart";
 import Admin from "../Pages/Admin/Admin";
 import Private from "../Component/Private/Private"
+import Checkout from "../Pages/Checkout/Checkout";
 
 const Router = createBrowserRouter([
   {
@@ -30,12 +31,12 @@ const Router = createBrowserRouter([
         children: [
           {
             path: "/category",
-            loader: () => fetch(`https://online-shop-server-f69l.onrender.com/api/category`),
+            loader: () => fetch(`https://online-shop-server-f69l.onrender.com/api/categoryAll/1`),
             element: <HomeCategory></HomeCategory>
           },
           {
             path: "/category/:categoryName",
-            loader: ({ params }) => fetch(`https://online-shop-server-f69l.onrender.com/api/category/${params.categoryName}`),
+            loader: ({ params }) => fetch(`https://online-shop-server-f69l.onrender.com/api/category/${params.categoryName}/1`),
             element: <Product></Product>
           },
         ]
@@ -49,6 +50,10 @@ const Router = createBrowserRouter([
         path: "/mycart",
         element: <Private><MyCart></MyCart></Private>
       },
+      {
+        path: "/checkout",
+        element: <Private><Checkout></Checkout></Private>
+      }
     ]
 
   },

@@ -5,7 +5,7 @@ import HashLoader from "react-spinners/HashLoader";
 
 
 function Category() {
-
+    
     const navigation = useNavigation();
     return (
         <div className="bg-gray-200">

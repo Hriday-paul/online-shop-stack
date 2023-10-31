@@ -1,11 +1,13 @@
 const productModel = require("../model/productModel");
 const demoModel = require("../model/demoModel");
+const userCart = require("../model/userCart");
 const { v4: uuidv4 } = require('uuid');
 const path = require("path");
 
 const getData = async (req, res) => {
     try {
-        const datas = await productModel.find({}).select("-image").sort({ createdAt: -1 });
+        const page_num = parseInt(req.params.pageNum);
+        const datas = await productModel.find({}).select("-image").sort({ createdAt: -1 }).skip((page_num-1)*9).limit(9)
         res.send({
             status: true,
             message: "All product get successfully",
@@ -43,9 +45,10 @@ const getSingleProduct = async (req, res) => {
 const getCategoryProduct = async (req, res) => {
     try {
         const categorynm = req.params.categoryName
-        //console.log(categorynm)
+        const page_num = parseInt(req.params.pageNum);
+        console.log(categorynm, page_num)
         const query = { category: categorynm }
-        const datas = await productModel.find(query)
+        const datas = await productModel.find(query).select("-image").sort({ createdAt: -1 }).skip((page_num-1)*9).limit(9)
         res.send({
             status: true,
             message: "All product get successfully",
@@ -118,6 +121,64 @@ const getPhoto = async (req, res) => {
     }
 };
 
+//add to cart by email
+const addToCart = async (req, res) => {
+    try {
+        const filter = { id: req.body.id };
+        const options = { upsert: true };
+        const updateDoc = {
+            $set: {
+                id: req.body.id,
+                product_model: req.body.productModel,
+                stock: req.body.stock,
+                price: req.body.price,
+                discount: req.body.discount,
+                email: req.body.email,
+                quantity: req.body.quantity || 1,
+            },
+        };
+        await userCart.updateOne(filter, updateDoc, options);
+        res.send({
+            status: true,
+            message: "Added cart SuccessFully",
+        })
+    }
+    catch (err) {
+        res.send({
+            status: false,
+            message: err.message,
+            error: err
+        })
+    }
+}
+
+//get user added cart
+const userGetCart = async (req, res) => {
+    try {
+        const email = req.params.email;
+        const query = { email }
+        const carts = await userCart.find(query)
+        res.send({
+            status: true,
+            message: "Cart product get successfully",
+            carts
+        })
+    }
+    catch (err) {
+        res.send({
+            status: false,
+            message: err.message,
+            error: err
+        })
+    }
+}
+
+//delete add to cart product
+const deleteCart = async(req, res)=>{
+    const id = req.params.id;
+    const query = {id}
+    await userCart.deleteOne(query)
+}
 
 
 module.exports = {
@@ -126,4 +187,7 @@ module.exports = {
     getCategoryProduct,
     postData,
     getPhoto,
+    addToCart,
+    userGetCart,
+    deleteCart,
 }

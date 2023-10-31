@@ -1,5 +1,5 @@
 const express = require("express");
-const { getData, postData, demoControler, getPhoto, getCategoryProduct, getSingleProduct } = require("../controler/controler");
+const { getData, postData, demoControler, getPhoto, getCategoryProduct, getSingleProduct, addToCart, userGetCart, deleteCart } = require("../controler/controler");
 const router = express.Router();
 const path = require("path");
 var bodyParser = require('body-parser')
@@ -8,7 +8,7 @@ router.use(bodyParser.urlencoded({ limit: '50mb', extended: true }))
 
 
 
-router.get("/category", getData);
+router.get("/categoryAll/:pageNum", getData);
 
 //get single product
 router.get("/product/:id", getSingleProduct)
@@ -20,8 +20,16 @@ router.post("/postData", postData);
 router.get("/getImage/:id", getPhoto)
 
 //get category wise product
-router.get("/category/:categoryName", getCategoryProduct)
+router.get("/category/:categoryName/:pageNum", getCategoryProduct)
 
+// add to cart
+router.put("/addCart", addToCart)
+
+//get user added cart
+router.get("/getCart/:email", userGetCart)
+
+//delete add to cart product
+router.delete("/deleteCart/:id", deleteCart)
 
 
 

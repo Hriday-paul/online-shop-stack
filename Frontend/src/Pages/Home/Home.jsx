@@ -5,6 +5,7 @@ import { FcSmartphoneTablet } from 'react-icons/fc';
 import { BsLaptop, BsGift } from 'react-icons/bs';
 import { GiWatch, GiSchoolBag } from 'react-icons/gi';
 import { BiDesktop, BiSolidTShirt } from 'react-icons/bi';
+import SwiperSComp from "./Swiper";
 
 function Home() {
 
@@ -44,115 +45,63 @@ function Home() {
                     {/* //carousel */}
 
                     <div className="col-span-9">
-                        <div className="relative flex flex-col justify-center items-center z-10 ">
-                            <div id="default-carousel" className="relative w-full" data-carousel="slide">
-
-                                <div className="relative h-56 overflow-hidden md:h-96 lg:h-[448px]">
-
-                                    <div className="hidden duration-700 ease-in-out" data-carousel-item>
-                                        <div className="hero h-full bg-[url('https://azse77seaprodsa.blob.core.windows.net/b2b-dr-pickaboocdn/media/dcastalia_hybridslider/image/Amazfit_Pop_3s_and_3r_Big_Banner_1_.jpg')]" >
-                                        </div>
-                                    </div>
-
-                                    <div className="hidden duration-700 ease-in-out" data-carousel-item>
-                                        <div className="hero h-full bg-[url('https://i.ibb.co/DQP9gDb/ezgif-com-webp-to-jpg.jpg')]">
-                                        </div>
-                                    </div>
-
-                                    <div className="hidden duration-700 ease-in-out" data-carousel-item>
-                                        <div className="hero h-full bg-[url('https://www.startech.com.bd/image/cache/catalog/home/banner/mpl-pc-laptop-offer-982x500.webp')]">
-                                        </div>
-                                    </div>
-
-                                    <div className="hidden duration-700 ease-in-out" data-carousel-item>
-                                        <div className="hero h-full bg-[url('https://i.ibb.co/DQP9gDb/ezgif-com-webp-to-jpg.jpg')]" >
-                                        </div>
-                                    </div>
-
-                                </div>
-
-                                <div className="absolute z-30 flex space-x-3 -translate-x-1/2 bottom-5 left-1/2">
-                                    <button type="button" className="w-3 h-3 rounded-full" aria-current="true" aria-label="Slide 1" data-carousel-slide-to="0"></button>
-                                    <button type="button" className="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 2" data-carousel-slide-to="1"></button>
-                                    <button type="button" className="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 3" data-carousel-slide-to="2"></button>
-                                    <button type="button" className="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 4" data-carousel-slide-to="3"></button>
-                                </div>
-
-                                <button type="button" className="absolute top-0 left-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-prev>
-                                    <span className="inline-flex items-center justify-center w-10 h-10 rounded-full  group-focus:outline-none">
-                                        <svg className="w-4 h-8 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                                            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 1 1 5l4 4" />
-                                        </svg>
-                                        <span className="sr-only">Previous</span>
-                                    </span>
-                                </button>
-                                <button type="button" className="absolute top-0 right-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-next>
-                                    <span className="inline-flex items-center justify-center w-10 h-10 rounded-full  group-focus:outline-none">
-                                        <svg className="w-4 h-8" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                                            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 9 4-4-4-4" />
-                                        </svg>
-                                        <span className="sr-only">Next</span>
-                                    </span>
-                                </button>
-                            </div>
-                        </div>
-
+                        <SwiperSComp></SwiperSComp>
                     </div>
                 </div>
 
                 {/* //category */}
 
-                <div className="my-10">
+                <div className="my-6 md:my-10">
                     <div className="bg-gradient-to-r from-sky-400 to-blue-300">
-                        <h3 className="bg-orange-400 p-4 pr-6 inline-block rounded-tr-full text-white font-bold text-xl">FEATURED CATEGORY</h3>
+                        <h3 className="bg-orange-400 p-4 pr-6 inline-block rounded-tr-full text-white font-bold text-xs md:text-lg lg:text-xl">FEATURED CATEGORY</h3>
                     </div>
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-5 my-10">
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-5 my-6 md:my-10">
                         <Link to="/category/Smart phone" className="h-60 group">
                             <div className="bg-white rounded-xl flex flex-col gap-y-3 justify-center items-center h-full shadow-md hover:shadow-lg">
                                 <FcSmartphoneTablet className="text-[100px] group-hover:scale-110 duration-200"></FcSmartphoneTablet>
-                                <p className="text-2xl font-bold font-mono">Samrt Phone</p>
+                                <p className="text-xl md:text-2xl font-bold font-mono">Samrt Phone</p>
                             </div>
                         </Link>
                         <Link to="/category/Laptop" className="h-60 group">
                             <div className="bg-white rounded-xl flex flex-col gap-y-3 justify-center items-center h-full shadow-md hover:shadow-lg">
                                 <BsLaptop className="text-[100px] group-hover:scale-110 duration-200 text-orange-400"></BsLaptop>
-                                <p className="text-2xl font-bold font-mono">Laptop</p>
+                                <p className="text-xl md:text-2xl font-bold font-mono">Laptop</p>
                             </div>
                         </Link>
                         <Link to="/category/Desktop" className="h-60 group">
                             <div className="bg-white rounded-xl flex flex-col gap-y-3 justify-center items-center h-full shadow-md hover:shadow-lg">
                                 <BiDesktop className="text-[100px] group-hover:scale-110 duration-200 text-orange-400"></BiDesktop>
-                                <p className="text-2xl font-bold font-mono">Desktop</p>
+                                <p className="text-xl md:text-2xl font-bold font-mono">Desktop</p>
                             </div>
                         </Link>
                         <Link to="/category/Watch" className="h-60 group">
                             <div className="bg-white rounded-xl flex flex-col gap-y-3 justify-center items-center h-full shadow-md hover:shadow-lg">
                                 <GiWatch className="text-[100px] group-hover:scale-110 duration-200 text-orange-400"></GiWatch>
-                                <p className="text-2xl font-bold font-mono">Watch</p>
+                                <p className="text-xl md:text-2xl font-bold font-mono">Watch</p>
                             </div>
                         </Link>
                         <Link to="/category/T-Shirt" className="h-60 group">
                             <div className="bg-white rounded-xl flex flex-col gap-y-3 justify-center items-center h-full shadow-md hover:shadow-lg">
                                 <BiSolidTShirt className="text-[100px] group-hover:scale-110 duration-200 text-orange-400"></BiSolidTShirt>
-                                <p className="text-2xl font-bold font-mono">T-Shirt</p>
+                                <p className="text-xl md:text-2xl font-bold font-mono">T-Shirt</p>
                             </div>
                         </Link>
                         <Link to="/category/Bag" className="h-60 group">
                             <div className="bg-white rounded-xl flex flex-col gap-y-3 justify-center items-center h-full shadow-md hover:shadow-lg">
                                 <GiSchoolBag className="text-[100px] group-hover:scale-110 duration-200 text-orange-400"></GiSchoolBag>
-                                <p className="text-2xl font-bold font-mono">Bag</p>
+                                <p className="text-xl md:text-2xl font-bold font-mono">Bag</p>
                             </div>
                         </Link>
                         <Link to="/category/Gift" className="h-60 group">
                             <div className="bg-white rounded-xl flex flex-col gap-y-3 justify-center items-center h-full shadow-md hover:shadow-lg">
                                 <BsGift className="text-[100px] group-hover:scale-110 duration-200 text-orange-400"></BsGift>
-                                <p className="text-2xl font-bold font-mono">Gift</p>
+                                <p className="text-xl md:text-2xl font-bold font-mono">Gift</p>
                             </div>
                         </Link>
                         <Link to="/category/Cosmetics" className="h-60 group">
                             <div className="bg-white rounded-xl flex flex-col gap-y-3 justify-center items-center h-full shadow-md hover:shadow-lg">
                                 <img src="https://i.ibb.co/Sn9fWBj/3194619.png" className="group-hover:scale-110 duration-200 h-28"></img>
-                                <p className="text-2xl font-bold font-mono">Cosmetics</p>
+                                <p className="text-xl md:text-2xl font-bold font-mono">Cosmetics</p>
                             </div>
                         </Link>
                     </div>
