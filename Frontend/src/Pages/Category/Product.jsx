@@ -8,14 +8,20 @@ import { useContext } from "react";
 import { CardContext } from "../../Component/HandleContext/HandleContext";
 import { authContext } from "../../Component/Authonicate/Authonicate";
 import axios from "axios"
+import { Pagination } from 'antd';
+
 
 function Product() {
     const { addProductCart } = useContext(CardContext);
     const { userInfo } = useContext(authContext);
     const [products, setProducts] = useState([])
     const [activePag, setActivePag] = useState(1)
+    const [limit, setLimit] = useState(9);
+    const [productLength, setProductLength] = useState(0)
     const navig = useNavigate();
     const { datas } = useLoaderData();
+    const { categoryName } = useParams();
+
     useEffect(() => {
         if (datas) {
             setProducts(datas)
@@ -31,30 +37,41 @@ function Product() {
     const handleAddCart = (product) => {
         if (userInfo) {
             addProductCart({ ...product, email: userInfo.email })
-
         }
         else {
             navig("/login")
         }
 
     }
-    const { categoryName } = useParams();
 
-    const handlePageChange = (page_num) => {
-        setActivePag(page_num)
-        axios.get(`https://online-shop-server-f69l.onrender.com/api/category/${categoryName}/${page_num}`)
+    const onChange = (pageNumber) => {
+        console.log('Page: ', pageNumber);
+        setActivePag(pageNumber);
+    };
+
+    useEffect(() => {
+        axios.get(`https://online-shop-server-f69l.onrender.com/api/categoryDataLength/${categoryName}`)
+            .then(res => {
+                console.log(res.data.data)
+                setProductLength(res.data.data)
+            })
+
+    }, [])
+
+    useEffect(() => {
+        axios.get(`https://online-shop-server-f69l.onrender.com/api/category/${categoryName}/${activePag}`)
             .then(res => {
                 setProducts(res.data.datas);
             })
-    }
+    }, [activePag])
 
     return (
         <div>
             {
                 !products.length > 0 ? <div className="lg:min-h-[428px] min-h-[300px] flex flex-col justify-center items-center">
-                <img className="h-60 w-96" src="https://i.ibb.co/K6hbJRH/no-product-found.png"></img>
-                <button onClick={()=>navig(-1)} className="btn btn-neutral btn-sm mt-3">Go back<BsArrowRightShort className="text-2xl"></BsArrowRightShort></button>
-            </div> : <div>
+                    <img className="h-60 w-96" src="https://i.ibb.co/K6hbJRH/no-product-found.png"></img>
+                    <button onClick={() => navig(-1)} className="btn btn-neutral btn-sm mt-3">Go back<BsArrowRightShort className="text-2xl"></BsArrowRightShort></button>
+                </div> : <div>
                     <div className="grid grid-cols-1 md:grid-cols-3 m-5 gap-x-0 gap-y-5 md:gap-5">
                         {
                             products && products.map((product) => {
@@ -100,45 +117,14 @@ function Product() {
                             })
                         }
                     </div>
-                    {
-                        products && <nav aria-label="Page navigation example" className="py-10">
-                            <ul className="flex items-center -space-x-px h-10 text-base justify-center">
-                                <li>
-                                    <span className="flex cursor-pointer items-center justify-center px-4 h-10 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700">
-                                        <span className="sr-only">Previous</span>
-                                        <svg className="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                                            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 1 1 5l4 4" />
-                                        </svg>
-                                    </span>
-                                </li>
-                                <li onClick={() => handlePageChange(1)}>
-                                    <span className={`flex items-center cursor-pointer justify-center px-4 h-10 leading-tight ${activePag == 1 ? "leading-tight text-blue-600 border border-blue-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700" : "text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700"}`}>1</span>
-                                </li>
-                                <li onClick={() => handlePageChange(2)}>
-                                    <span className={`flex items-center cursor-pointer justify-center px-4 h-10 leading-tight ${activePag == 2 ? "leading-tight text-blue-600 border border-blue-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700" : "text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700"}`}>2</span>
-                                </li>
-                                <li onClick={() => handlePageChange(3)}>
-                                    <span className={`flex items-center cursor-pointer justify-center px-4 h-10 leading-tight ${activePag == 3 ? "leading-tight text-blue-600 border border-blue-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700" : "text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700"}`}>3</span>
-                                </li>
-                                <li onClick={() => handlePageChange(4)}>
-                                    <span className={`flex items-center cursor-pointer justify-center px-4 h-10 leading-tight ${activePag == 4 ? "leading-tight text-blue-600 border border-blue-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700" : "text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700"}`}>4</span>
-                                </li>
-                                <li onClick={() => handlePageChange(5)}>
-                                    <span className={`flex items-center cursor-pointer justify-center px-4 h-10 leading-tight ${activePag == 5 ? "leading-tight text-blue-600 border border-blue-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700" : "text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700"}`}>5</span>
-                                </li>
-                                <li>
-                                    <span className="flex items-center cursor-pointer justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700">
-                                        <span className="sr-only">Next</span>
-                                        <svg className="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                                            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 9 4-4-4-4" />
-                                        </svg>
-                                    </span>
-                                </li>
-                            </ul>
-                        </nav>
-                    }
                 </div>
 
+            }
+            {
+                products && <div className="mx-auto flex justify-center py-10 ">
+                    <Pagination showQuickJumper defaultCurrent={1} pageSize={limit} total={productLength} onChange={onChange} />
+                    <br />
+                </div>
             }
         </div>
 

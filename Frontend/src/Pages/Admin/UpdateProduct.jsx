@@ -1,22 +1,17 @@
+
+import PropTypes from 'prop-types'
 import axios from "axios"
 import Swal from 'sweetalert2/dist/sweetalert2.js'
 import 'sweetalert2/src/sweetalert2.scss'
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Spin } from 'antd';
 import { RxCross2 } from 'react-icons/rx';
 
 
-function Admin() {
+function UpdateProduct({ updateId }) {
     const [image, setImage] = useState("");
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
 
-    const handleAlert = (message, icon) => {
-        Swal.fire({
-            text: `${message}`,
-            icon: `${icon}`,
-            confirmButtonText: 'close'
-        })
-    }
     const [productInfo, setProductInfo] = useState({
         productName: "",
         productModel: "",
@@ -27,6 +22,33 @@ function Admin() {
         discount: "",
         categoryName: ""
     });
+
+    const handleAlert = (message, icon) => {
+        Swal.fire({
+            text: `${message}`,
+            icon: `${icon}`,
+            confirmButtonText: 'close'
+        })
+    }
+
+    useEffect(() => {
+        axios.get(`https://online-shop-server-f69l.onrender.com/api/product/${updateId}`)
+            .then(({ data }) => {
+                const { data: datas } = data;
+                setProductInfo({
+                    productName: datas?.product_name,
+                    productModel: datas?.product_model,
+                    brand: datas?.brand,
+                    stock: datas?.stock,
+                    description: datas?.description,
+                    price: datas?.price,
+                    discount: datas?.discount,
+                    categoryName: datas?.category
+                })
+                setLoading(false)
+            })
+    }, [updateId])
+
     const handleChange = (e) => {
         e.preventDefault();
         const fieldName = e.target.name;
@@ -49,8 +71,7 @@ function Admin() {
         form.append("discount", discount);
         form.append("description", description);
         form.append("categoryName", categoryName);
-
-        axios.post("https://online-shop-server-f69l.onrender.com/api/postData", form)
+        axios.put(`https://online-shop-server-f69l.onrender.com/api/updateProduct?id=${updateId}&imageTrue=${image}`, form)
             .then(res => {
                 if (res.data.status) {
                     setLoading(false)
@@ -69,19 +90,17 @@ function Admin() {
                 }
                 else {
                     setLoading(false)
-                    handleAlert("Please, enter all information perfectly", "error")
-                }
+                    handleAlert(res.data.message, "error")
+                } 
             })
-            .catch(() => {
-                setLoading(false)
-            })
+
     }
 
     //
     return (
         <Spin tip="Loading..." spinning={loading} size="large">
             <section className="max-w-4xl p-6 mx-auto border-2 rounded-md shadow-md">
-                {/* <h1 className="text-3xl font-bold text-black capitalize mb-8 text-center">Add product in Database</h1> */}
+
                 <form onSubmit={handleUpload} encType="multipart/form-data">
                     <div className="">
                         <div className="grid grid-cols-1 mt-4 gap-5 md:grid-cols-2">
@@ -127,7 +146,7 @@ function Admin() {
                         </div>
                         <div className="col-span-2">
                             <label className="text-white dark:text-gray-200" htmlFor="passwordConfirmation">Select</label>
-                            <select name="categoryName" id="cate" className="block cursor-pointer w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring" onChange={handleChange} required>
+                            <select name="categoryName" id="cate" className="block cursor-pointer w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring" onChange={handleChange} required value={productInfo.categoryName}>
                                 <option>Chose category</option>
                                 <option value="Smart phone">Smart phone</option>
                                 <option value={"Laptop"}>Laptop</option>
@@ -158,7 +177,7 @@ function Admin() {
                                 <div className="flex text-sm">
                                     <label htmlFor="file-upload" className="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
                                         <span className="">Upload a file</span>
-                                        <input id="file-upload" name="imageFile" onChange={(e) => setImage(e.target.files[0])} type="file" className="sr-only" required/>
+                                        <input id="file-upload" name="imageFile" onChange={(e) => setImage(e.target.files[0])} type="file" className="sr-only" />
                                     </label>
                                     <p className="pl-1 text-black">or drag and drop</p>
                                 </div>
@@ -167,7 +186,7 @@ function Admin() {
                                 </p>
                                 {
                                     image && <div className='flex justify-center'>
-                                        <img src={URL.createObjectURL(image)} height="100" width="100" />
+                                        <img src={URL.createObjectURL(image)} className='bg-cover'height="100" width="100" />
                                         <Button onClick={()=>setImage("")}className='-ml-7' type='primary' size="small"><RxCross2></RxCross2></Button>
                                     </div>
                                 }
@@ -175,18 +194,20 @@ function Admin() {
                         </div>
                     </div>
 
-
-
                     <div className="flex justify-end mt-6">
                         <button className="px-6 py-3 leading-5 text-white transition-colors duration-200 transform bg-blue-500 rounded-md hover:bg-blue-600 focus:outline-none w-full focus:bg-gray-600 uppercase font-bold">Save</button>
                     </div>
                 </form>
-
-
 
             </section>
         </Spin>
     )
 }
 
-export default Admin
+
+UpdateProduct.propTypes = {
+    updateId: PropTypes.string,
+}
+
+export default UpdateProduct
+

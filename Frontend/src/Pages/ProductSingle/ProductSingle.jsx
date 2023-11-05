@@ -34,7 +34,7 @@ const handleAddCart = (product) => {
       <div className="max-w-7xl mx-auto px-4">
         <hr />
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-x-0 md:gap-x-5 py-10">
-          <div className="flex justify-center items-center lg:col-span-2">
+          <div className="flex justify-center items-center lg:col-span-2 cursor-zoom-in">
             <div>
               <Zoom img={`https://online-shop-server-f69l.onrender.com/api/getImage/${id}`} zoomScale={2} width={380} height={380} />
               <div className="w-32 md:w-40 mx-auto mt-5">

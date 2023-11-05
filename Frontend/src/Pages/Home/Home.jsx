@@ -108,7 +108,7 @@ function Home() {
                 </div>
                 
                 {/* //subscribe */}
-                <div className="relative bg-violet-600">
+                <div className="relative bg-violet-600 z-10">
                     <div className="absolute inset-x-0 bottom-0">
                         <svg viewBox="0 0 224 12" fill="currentColor" className="w-full -mb-1 text-white" preserveAspectRatio="none">
                             <path

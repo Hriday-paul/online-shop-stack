@@ -9,6 +9,7 @@ import { CardContext } from '../../Component/HandleContext/HandleContext';
 import { authContext } from '../../Component/Authonicate/Authonicate';
 import { useEffect } from 'react';
 import { HiOutlineBars3 } from 'react-icons/hi2';
+import Sticky from 'react-stickynode';
 
 
 function Navbar() {
@@ -44,7 +45,7 @@ function Navbar() {
                             </div>
                             <div className='flex items-center border-r-gray-400 text-sm'>
                                 <div className='border-r border-r-gray-400 px-1 md:px-2 text-sm'>
-                                    <Link to="/account" className='flex gap-x-1 items-center hover:text-orange-400 duration-300'>
+                                    <Link to="/profile" className='flex gap-x-1 items-center hover:text-orange-400 duration-300'>
                                         <FcBusinessman className='text-orange-400 text-sm md:text-lg'></FcBusinessman>
                                         <p className='text-sm md:text-base'>My account</p>
                                     </Link>
@@ -99,10 +100,10 @@ function Navbar() {
                             </div>
                             <div className='relative group flex items-center justify-center mr-3'>
                                 <div className='cursor-pointer'><MdShoppingCartCheckout className='text-4xl text-orange-600 p-2 border-orange-600 hover:bg-orange-600 hover:text-white duration-200 rounded-full border'></MdShoppingCartCheckout></div>
-                                <div className='absolute top-0 mt-14 group-hover:mt-9 right-0 transition duration-700 bg-white border z-50 p-3 w-60 hidden group-hover:inline shadow-2xl'>
+                                <div className='absolute top-0 mt-14 group-hover:mt-9 right-0 transition duration-700 bg-white border z-[99] p-3 w-60 hidden group-hover:inline shadow-2xl'>
                                     <div className='flex justify-between pb-1 border-b-2'>
                                         <p>{cartProducts.length} items</p>
-                                        {cartProducts.length>0 ? <Link className='text-orange-400 hover:text-orange-500 duration-150' to="/mycart">view cart</Link> : <p>No cart</p>}
+                                        {cartProducts.length > 0 ? <Link className='text-orange-400 hover:text-orange-500 duration-150' to="/mycart">view cart</Link> : <p>No cart</p>}
                                     </div>
                                     {
                                         cartProducts && cartProducts.map((cart) => {
@@ -117,7 +118,7 @@ function Navbar() {
                                         })
                                     }
                                     {
-                                        cartProducts.length>0 && <Link to="/checkout" className={`hover:border-white/40 w-full hover:bg-orange-400 flex items-center justify-center rounded-md border border-transparent bg-orange-500 px-5 py-2.5 text-center text-sm font-medium text-white focus:outline-none focus:ring-4 duration-200 focus:ring-orange-600 mt-2`}>Checkout</Link>
+                                        cartProducts.length > 0 && <Link to="/checkout" className={`hover:border-white/40 w-full hover:bg-orange-400 flex items-center justify-center rounded-md border border-transparent bg-orange-500 px-5 py-2.5 text-center text-sm font-medium text-white focus:outline-none focus:ring-4 duration-200 focus:ring-orange-600 mt-2`}>Checkout</Link>
                                     }
                                 </div>
                             </div>
@@ -127,105 +128,109 @@ function Navbar() {
             </div>
 
 
-            <nav className="bg-gray-800  sticky top-0 z-40 mt-5">
-                <div className="max-w-7xl mx-auto px-4 md:px-0">
-                    <div className="grid grid-cols-4 justify-between items-center">
-                        <div className="col-span-1 bg-orange-400">
-                            <NavLink to="/category" className='flex items-center justify-between gap-x-2 px-5 py-3 md:py-5 bg-orange-400 duration-300 text-white'>
-                                <h1 className='text-lg md:text-xl font-medium'>See All</h1>
-                                <RiMenu3Line className='text-xl'></RiMenu3Line>
-                            </NavLink>
+            <Sticky top="#header" bottomBoundary="#content" innerZ={50}>
+                <nav className="bg-gray-800">
+                    <div className="max-w-7xl mx-auto px-4 md:px-0">
+                        <div className="grid grid-cols-4 justify-between items-center">
+                            <div className="col-span-1 bg-orange-400">
+                                <NavLink to="/category" className='flex items-center justify-between gap-x-2 px-5 py-3 md:py-5 bg-orange-400 duration-300 text-white'>
+                                    <h1 className='text-lg md:text-xl font-medium'>See All</h1>
+                                    <RiMenu3Line className='text-xl'></RiMenu3Line>
+                                </NavLink>
+                            </div>
+                            <div className="hidden md:inline md:col-span-3">
+                                <ul className="flex gap-x-8 justify-center items-center">
+                                    <li>
+                                        <Link to="/" className="block py-2 pl-3 text-white pr-4 border-b-2 border-orange-400 border-opacity-0 hover:border-opacity-100 hover:text-orange-400 duration-200 cursor-pointer">Home</Link>
+                                    </li>
+                                    <li>
+                                        <span className='relative group'>
+                                            <p className="flex items-center  py-2 pl-3 text-white pr-4  border-opacity-0 hover:border-opacity-100 hover:text-orange-400 duration-200 cursor-pointer">Categorys<RiArrowDropDownLine className="text-2xl group-hover:rotate-180 duration-300"></RiArrowDropDownLine></p>
+                                            <div className='absolute hidden group-hover:grid grid-cols-2 gap-x-3 justify-between items-center w-72 top-0 bg-gray-100 rounded rounded-t-none border-t-4 border-t-orange-600 mt-[40px] shadow-2xl'>
+                                                <NavLink to="/category/Smart phone" className={({ isActive }) => isActive ? " duration-200 px-6 py-3 border-r-2 bg-white border-orange-600 text-sm" : "hover:border-orange-600 hover:border-r-2 duration-100 px-6 py-3 hover:bg-white text-sm"
+                                                }>Smart Phone</NavLink>
+                                                <NavLink to="/category/Laptop" className={({ isActive }) => isActive ? " duration-200 px-6 py-3 border-r-2 bg-white border-orange-600 text-sm mt-2" : "hover:border-orange-600 hover:border-r-2 duration-100 px-6 py-3 hover:bg-white text-sm mt-2"
+                                                }>Laptop</NavLink>
+                                                <NavLink to="/category/Desktop" className={({ isActive }) => isActive ? " duration-200 px-6 py-3 border-r-2 bg-white border-orange-600 text-sm " : "hover:border-orange-600 hover:border-r-2 duration-100 px-6 py-3 hover:bg-white text-sm"
+                                                }>Desktop</NavLink>
+                                                <NavLink to="/category/Watch" className={({ isActive }) => isActive ? " duration-200 px-6 py-3 border-r-2 bg-white border-orange-600 text-sm mt-2" : "hover:border-orange-600 hover:border-r-2 duration-100 px-6 py-3 hover:bg-white text-sm mt-2"
+                                                }>Watch</NavLink>
+                                                <NavLink to="/category/T-Shirt" className={({ isActive }) => isActive ? " duration-200 px-6 py-3 border-r-2 bg-white border-orange-600 text-sm mt-2" : "hover:border-orange-600 hover:border-r-2 duration-100 px-6 py-3 hover:bg-white text-sm mt-2"
+                                                }>Shirt</NavLink>
+                                                <NavLink to="/category/Bag" className={({ isActive }) => isActive ? " duration-200 px-6 py-3 border-r-2 bg-white border-orange-600 text-sm mt-2" : "hover:border-orange-600 hover:border-r-2 duration-100 px-6 py-3 hover:bg-white text-sm mt-2"
+                                                }>Bag</NavLink>
+                                                <NavLink to="/category/Gift" className={({ isActive }) => isActive ? " duration-200 px-6 py-3 border-r-2 bg-white border-orange-600 text-sm mt-2" : "hover:border-orange-600 hover:border-r-2 duration-100 px-6 py-3 hover:bg-white text-sm mt-2"
+                                                }>Gift</NavLink>
+                                                <NavLink to="/category/Cosmetics" className={({ isActive }) => isActive ? " duration-200 px-6 py-3 border-r-2 bg-white border-orange-600 text-sm mt-2" : "hover:border-orange-600 hover:border-r-2 duration-100 px-6 py-3 hover:bg-white text-sm mt-2"
+                                                }>Cosmetics</NavLink>
+                                            </div>
+                                        </span>
+                                    </li>
+                                    <li>
+                                        <Link to="/mycart" className="block py-2 pl-3 text-white pr-4 border-b-2 border-orange-400 border-opacity-0 hover:border-opacity-100 hover:text-orange-400 duration-200 cursor-pointer">My Cart</Link>
+                                    </li>
+                                    <li>
+                                        <Link to="/contact" className="block py-2 pl-3 text-white pr-4 border-b-2 border-orange-400 border-opacity-0 hover:border-opacity-100 hover:text-orange-400 duration-200 cursor-pointer">Contact</Link>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div className='md:hidden flex justify-end col-span-3'>
+                                {
+                                    !slide && <HiOutlineBars3 className='text-2xl text-white cursor-pointer' onClick={() => setSlide(true)}></HiOutlineBars3>
+                                }
+                                {
+                                    slide && <RxCross2 className='text-2xl text-white cursor-pointer' onClick={() => setSlide(false)}></RxCross2>
+                                }
+                            </div>
                         </div>
-                        <div className="hidden md:inline md:col-span-3">
-                            <ul className="flex gap-x-8 justify-center items-center">
+                    </div>
+                    {/* //mobile device */}
+                    <div className={`absolute border-t border-gray-500 top-0 left-0 py-5 shadow-2xl bg-gray-800 mt-20 md:mt-12 w-full  ${slide ? "z-50 translate-x-0" : "-translate-x-full"} duration-300`}>
+                        <div className='px-4'>
+                            <ul className="border border-white p-5 rounded-md">
                                 <li>
-                                    <Link to="/" className="block py-2 pl-3 text-white pr-4 border-b-2 border-orange-400 border-opacity-0 hover:border-opacity-100 hover:text-orange-400 duration-200 cursor-pointer">Home</Link>
+                                    <Link onClick={()=>setSlide(false)} to="/" className="block py-2 pl-3 text-white pr-4 border-b-2 border-orange-400 border-opacity-0 hover:border-opacity-100 hover:text-orange-400 duration-200 cursor-pointer">Home</Link>
                                 </li>
                                 <li>
                                     <span className='relative group'>
-                                        <p className="flex items-center  py-2 pl-3 text-white pr-4  border-opacity-0 hover:border-opacity-100 hover:text-orange-400 duration-200 cursor-pointer">Categorys<RiArrowDropDownLine className="text-2xl group-hover:rotate-180 duration-300"></RiArrowDropDownLine></p>
+                                        <p className="flex items-center py-2 pl-3 text-white pr-4  border-opacity-0 hover:border-opacity-100 hover:text-orange-400 duration-200 cursor-pointer">Categorys<RiArrowDropDownLine className="text-2xl group-hover:rotate-180 duration-300"></RiArrowDropDownLine></p>
                                         <div className='absolute hidden group-hover:grid grid-cols-2 gap-x-3 justify-between items-center w-72 top-0 bg-gray-100 rounded rounded-t-none border-t-4 border-t-orange-600 mt-[40px]'>
-                                            <NavLink to="/category/Smart phone" className={({ isActive }) => isActive ? " duration-200 px-6 py-3 border-r-2 bg-white border-orange-600 text-sm" : "hover:border-orange-600 hover:border-r-2 duration-100 px-6 py-3 hover:bg-white text-sm"
+                                            <NavLink onClick={()=>setSlide(false)} to="/category/Smart phone" className={({ isActive }) => isActive ? " duration-200 px-6 py-3 border-r-2 bg-white border-orange-600 text-sm" : "hover:border-orange-600 hover:border-r-2 duration-100 px-6 py-3 hover:bg-white text-sm"
                                             }>Smart Phone</NavLink>
-                                            <NavLink to="/category/Laptop" className={({ isActive }) => isActive ? " duration-200 px-6 py-3 border-r-2 bg-white border-orange-600 text-sm mt-2" : "hover:border-orange-600 hover:border-r-2 duration-100 px-6 py-3 hover:bg-white text-sm mt-2"
+                                            <NavLink onClick={()=>setSlide(false)} to="/category/Laptop" className={({ isActive }) => isActive ? " duration-200 px-6 py-3 border-r-2 bg-white border-orange-600 text-sm mt-2" : "hover:border-orange-600 hover:border-r-2 duration-100 px-6 py-3 hover:bg-white text-sm mt-2"
                                             }>Laptop</NavLink>
-                                            <NavLink to="/category/Desktop" className={({ isActive }) => isActive ? " duration-200 px-6 py-3 border-r-2 bg-white border-orange-600 text-sm " : "hover:border-orange-600 hover:border-r-2 duration-100 px-6 py-3 hover:bg-white text-sm"
+                                            <NavLink onClick={()=>setSlide(false)} to="/category/Desktop" className={({ isActive }) => isActive ? " duration-200 px-6 py-3 border-r-2 bg-white border-orange-600 text-sm " : "hover:border-orange-600 hover:border-r-2 duration-100 px-6 py-3 hover:bg-white text-sm"
                                             }>Desktop</NavLink>
-                                            <NavLink to="/category/Watch" className={({ isActive }) => isActive ? " duration-200 px-6 py-3 border-r-2 bg-white border-orange-600 text-sm mt-2" : "hover:border-orange-600 hover:border-r-2 duration-100 px-6 py-3 hover:bg-white text-sm mt-2"
+                                            <NavLink onClick={()=>setSlide(false)} to="/category/Watch" className={({ isActive }) => isActive ? " duration-200 px-6 py-3 border-r-2 bg-white border-orange-600 text-sm mt-2" : "hover:border-orange-600 hover:border-r-2 duration-100 px-6 py-3 hover:bg-white text-sm mt-2"
                                             }>Watch</NavLink>
-                                            <NavLink to="/category/T-Shirt" className={({ isActive }) => isActive ? " duration-200 px-6 py-3 border-r-2 bg-white border-orange-600 text-sm mt-2" : "hover:border-orange-600 hover:border-r-2 duration-100 px-6 py-3 hover:bg-white text-sm mt-2"
+                                            <NavLink onClick={()=>setSlide(false)} to="/category/T-Shirt" className={({ isActive }) => isActive ? " duration-200 px-6 py-3 border-r-2 bg-white border-orange-600 text-sm mt-2" : "hover:border-orange-600 hover:border-r-2 duration-100 px-6 py-3 hover:bg-white text-sm mt-2"
                                             }>Shirt</NavLink>
-                                            <NavLink to="/category/Bag" className={({ isActive }) => isActive ? " duration-200 px-6 py-3 border-r-2 bg-white border-orange-600 text-sm mt-2" : "hover:border-orange-600 hover:border-r-2 duration-100 px-6 py-3 hover:bg-white text-sm mt-2"
+                                            <NavLink onClick={()=>setSlide(false)} to="/category/Bag" className={({ isActive }) => isActive ? " duration-200 px-6 py-3 border-r-2 bg-white border-orange-600 text-sm mt-2" : "hover:border-orange-600 hover:border-r-2 duration-100 px-6 py-3 hover:bg-white text-sm mt-2"
                                             }>Bag</NavLink>
-                                            <NavLink to="/category/Gift" className={({ isActive }) => isActive ? " duration-200 px-6 py-3 border-r-2 bg-white border-orange-600 text-sm mt-2" : "hover:border-orange-600 hover:border-r-2 duration-100 px-6 py-3 hover:bg-white text-sm mt-2"
+                                            <NavLink onClick={()=>setSlide(false)} to="/category/Gift" className={({ isActive }) => isActive ? " duration-200 px-6 py-3 border-r-2 bg-white border-orange-600 text-sm mt-2" : "hover:border-orange-600 hover:border-r-2 duration-100 px-6 py-3 hover:bg-white text-sm mt-2"
                                             }>Gift</NavLink>
-                                            <NavLink to="/category/Cosmetics" className={({ isActive }) => isActive ? " duration-200 px-6 py-3 border-r-2 bg-white border-orange-600 text-sm mt-2" : "hover:border-orange-600 hover:border-r-2 duration-100 px-6 py-3 hover:bg-white text-sm mt-2"
+                                            <NavLink onClick={()=>setSlide(false)} to="/category/Cosmetics" className={({ isActive }) => isActive ? " duration-200 px-6 py-3 border-r-2 bg-white border-orange-600 text-sm mt-2" : "hover:border-orange-600 hover:border-r-2 duration-100 px-6 py-3 hover:bg-white text-sm mt-2"
                                             }>Cosmetics</NavLink>
                                         </div>
                                     </span>
                                 </li>
                                 <li>
-                                    <Link to="/mycart" className="block py-2 pl-3 text-white pr-4 border-b-2 border-orange-400 border-opacity-0 hover:border-opacity-100 hover:text-orange-400 duration-200 cursor-pointer">My Cart</Link>
+                                    <Link onClick={()=>setSlide(false)} to="/mycart" className="block py-2 pl-3 text-white pr-4 border-b-2 border-orange-400 border-opacity-0 hover:border-opacity-100 hover:text-orange-400 duration-200 cursor-pointer">My Cart</Link>
                                 </li>
                                 <li>
-                                    <a className="block py-2 pl-3 text-white pr-4 border-b-2 border-orange-400 border-opacity-0 hover:border-opacity-100 hover:text-orange-400 duration-200 cursor-pointer">Contact</a>
+                                    <Link onClick={()=>setSlide(false)} to="/" className="block py-2 pl-3 text-white pr-4 border-b-2 border-orange-400 border-opacity-0 hover:border-opacity-100 hover:text-orange-400 duration-200 cursor-pointer">Service</Link>
+                                </li>
+                                <li>
+                                    <Link onClick={()=>setSlide(false)} to="/" className="block py-2 pl-3 text-white pr-4 border-b-2 border-orange-400 border-opacity-0 hover:border-opacity-100 hover:text-orange-400 duration-200 cursor-pointer">Contact</Link>
                                 </li>
                             </ul>
                         </div>
-                        <div className='md:hidden flex justify-end col-span-3'>
-                            {
-                                !slide && <HiOutlineBars3 className='text-2xl text-white cursor-pointer' onClick={() => setSlide(true)}></HiOutlineBars3>
-                            }
-                            {
-                                slide && <RxCross2 className='text-2xl text-white cursor-pointer' onClick={() => setSlide(false)}></RxCross2>
-                            }
-                        </div>
                     </div>
-                </div>
-                {/* //mobile device */}
-                <div className={`absolute border-t border-gray-500 top-0 left-0 py-5 bg-gray-800 mt-20 md:mt-12 ${slide ? "w-full overflow-visible z-50" : "w-0 overflow-hidden"} duration-300`}>
-                    <div className='px-4'>
-                        <ul className="border border-white p-5 rounded-md">
-                            <li>
-                                <Link to="/" className="block py-2 pl-3 text-white pr-4 border-b-2 border-orange-400 border-opacity-0 hover:border-opacity-100 hover:text-orange-400 duration-200 cursor-pointer">Home</Link>
-                            </li>
-                            <li>
-                                <span className='relative group'>
-                                    <p className="flex items-center py-2 pl-3 text-white pr-4  border-opacity-0 hover:border-opacity-100 hover:text-orange-400 duration-200 cursor-pointer">Categorys<RiArrowDropDownLine className="text-2xl group-hover:rotate-180 duration-300"></RiArrowDropDownLine></p>
-                                    <div className='absolute hidden group-hover:grid grid-cols-2 gap-x-3 justify-between items-center w-72 top-0 bg-gray-100 rounded rounded-t-none border-t-4 border-t-orange-600 mt-[40px]'>
-                                        <NavLink to="/category/Smart phone" className={({ isActive }) => isActive ? " duration-200 px-6 py-3 border-r-2 bg-white border-orange-600 text-sm" : "hover:border-orange-600 hover:border-r-2 duration-100 px-6 py-3 hover:bg-white text-sm"
-                                        }>Smart Phone</NavLink>
-                                        <NavLink to="/category/Laptop" className={({ isActive }) => isActive ? " duration-200 px-6 py-3 border-r-2 bg-white border-orange-600 text-sm mt-2" : "hover:border-orange-600 hover:border-r-2 duration-100 px-6 py-3 hover:bg-white text-sm mt-2"
-                                        }>Laptop</NavLink>
-                                        <NavLink to="/category/Desktop" className={({ isActive }) => isActive ? " duration-200 px-6 py-3 border-r-2 bg-white border-orange-600 text-sm " : "hover:border-orange-600 hover:border-r-2 duration-100 px-6 py-3 hover:bg-white text-sm"
-                                        }>Desktop</NavLink>
-                                        <NavLink to="/category/Watch" className={({ isActive }) => isActive ? " duration-200 px-6 py-3 border-r-2 bg-white border-orange-600 text-sm mt-2" : "hover:border-orange-600 hover:border-r-2 duration-100 px-6 py-3 hover:bg-white text-sm mt-2"
-                                        }>Watch</NavLink>
-                                        <NavLink to="/category/T-Shirt" className={({ isActive }) => isActive ? " duration-200 px-6 py-3 border-r-2 bg-white border-orange-600 text-sm mt-2" : "hover:border-orange-600 hover:border-r-2 duration-100 px-6 py-3 hover:bg-white text-sm mt-2"
-                                        }>Shirt</NavLink>
-                                        <NavLink to="/category/Bag" className={({ isActive }) => isActive ? " duration-200 px-6 py-3 border-r-2 bg-white border-orange-600 text-sm mt-2" : "hover:border-orange-600 hover:border-r-2 duration-100 px-6 py-3 hover:bg-white text-sm mt-2"
-                                        }>Bag</NavLink>
-                                        <NavLink to="/category/Gift" className={({ isActive }) => isActive ? " duration-200 px-6 py-3 border-r-2 bg-white border-orange-600 text-sm mt-2" : "hover:border-orange-600 hover:border-r-2 duration-100 px-6 py-3 hover:bg-white text-sm mt-2"
-                                        }>Gift</NavLink>
-                                        <NavLink to="/category/Cosmetics" className={({ isActive }) => isActive ? " duration-200 px-6 py-3 border-r-2 bg-white border-orange-600 text-sm mt-2" : "hover:border-orange-600 hover:border-r-2 duration-100 px-6 py-3 hover:bg-white text-sm mt-2"
-                                        }>Cosmetics</NavLink>
-                                    </div>
-                                </span>
-                            </li>
-                            <li>
-                                <Link to="/mycart" className="block py-2 pl-3 text-white pr-4 border-b-2 border-orange-400 border-opacity-0 hover:border-opacity-100 hover:text-orange-400 duration-200 cursor-pointer">My Cart</Link>
-                            </li>
-                            <li>
-                                <Link to="/" className="block py-2 pl-3 text-white pr-4 border-b-2 border-orange-400 border-opacity-0 hover:border-opacity-100 hover:text-orange-400 duration-200 cursor-pointer">Service</Link>
-                            </li>
-                            <li>
-                                <Link to="/" className="block py-2 pl-3 text-white pr-4 border-b-2 border-orange-400 border-opacity-0 hover:border-opacity-100 hover:text-orange-400 duration-200 cursor-pointer">Contact</Link>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
 
-            </nav>
+                </nav>
+            </Sticky>
+
+
 
 
         </div>

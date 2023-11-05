@@ -1,8 +1,16 @@
-import { useContext } from "react"
+import { useContext, useEffect, useState } from "react"
 import { authContext } from "../../Component/Authonicate/Authonicate"
+import axios from "axios";
 
 function Checkout() {
-    const {userInfo} = useContext(authContext);
+    const { userInfo } = useContext(authContext);
+    const [user, setUser] = useState({ name: " ", email: " ", phone: " " });
+    useEffect(() => {
+        axios.get(`https://online-shop-server-f69l.onrender.com/api/getuser?email=${userInfo.email}`)
+            .then(res => {
+                setUser(res.data.userData)
+            })
+    }, [])
     return (
         <div className="bg-gray-200">
             <div className="max-w-7xl mx-auto px-4">
@@ -11,7 +19,7 @@ function Checkout() {
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-0 md:gap-x-5 gap-y-5">
                             <div>
                                 <label className="text-black text-base font-medium" htmlFor="username">First name *</label>
-                                <input name="fname" id="fname" type="text" className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white outline-0 border-0 rounded-md  focus:border-orange-400 focus:outline-none focus:ring" placeholder='First name ...' required defaultValue={userInfo?.displayName}/>
+                                <input name="fname" id="fname" type="text" className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white outline-0 border-0 rounded-md  focus:border-orange-400 focus:outline-none focus:ring" placeholder='First name ...' required defaultValue={user?.name} />
                             </div>
                             <div>
                                 <label className="text-black text-base font-medium" htmlFor="username">Last name(optional)</label>
@@ -19,11 +27,11 @@ function Checkout() {
                             </div>
                             <div>
                                 <label className="text-black text-base font-medium" htmlFor="username">Email Address *</label>
-                                <input name="email" id="email" type="email" className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white outline-0 border-0 rounded-md  focus:border-blue-500 focus:outline-none focus:ring" placeholder='Email ...' required defaultValue={userInfo?.email}/>
+                                <input name="email" id="email" type="email" className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white outline-0 border-0 rounded-md  focus:border-blue-500 focus:outline-none focus:ring" placeholder='Email ...' required defaultValue={user?.email} />
                             </div>
                             <div>
                                 <label className="text-black text-base font-medium" htmlFor="username">Phone Number *</label>
-                                <input name="phone" id="phone" type="number" className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white outline-0 border-0 rounded-md  focus:border-blue-500 focus:outline-none focus:ring" placeholder='Phone Number ...' required />
+                                <input name="phone" id="phone" type="number" className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white outline-0 border-0 rounded-md  focus:border-blue-500 focus:outline-none focus:ring" placeholder='Phone Number ...' required defaultValue={user?.phone} />
                             </div>
                             <div>
                                 <label className="text-black text-base font-medium" htmlFor="passwordConfirmation">Select District</label>

@@ -46,6 +46,7 @@ function Authonicate({children}) {
         return sendPasswordResetEmail(auth, email)
     }
 
+
     const authInfo = {
         userInfo,
         createUser,

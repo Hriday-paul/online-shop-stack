@@ -1,12 +1,16 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { authContext } from "../../Component/Authonicate/Authonicate";
 import Swal from 'sweetalert2'
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { MailOutlined } from '@ant-design/icons';
+import { Input, Space } from 'antd';
 
 function Login() {
     const { userLogin, googleLogin } = useContext(authContext)
-    const {state} = useLocation();
-    const navigate = useNavigate();
+    const [passwordVisible, setPasswordVisible] = useState(false);
+    const { state } = useLocation();
+    const navig = useNavigate();
     const handleLogin = (e) => {
         e.preventDefault();
         const form = e.target;
@@ -14,18 +18,13 @@ function Login() {
         const password = form.password.value;
         userLogin(email, password)
             .then(() => {
-                Swal.fire({
-                    title: 'success',
-                    text: 'Login successfully',
-                    icon: 'success',
-                    confirmButtonText: 'Go Back'
-                })
                 form.reset();
+                state ? navig(`${state}`) : navig(`/`)
             })
-            .catch((err) => {
+            .catch(() => {
                 Swal.fire({
                     title: 'error',
-                    text: err.message,
+                    text: 'Enter valid Email or Password',
                     icon: 'error',
                     confirmButtonText: 'Go Back'
                 })
@@ -33,14 +32,10 @@ function Login() {
     }
     const handleGoogleSign = () => {
         googleLogin()
-            .then(() => {
-                Swal.fire({
-                    title: 'success',
-                    text: 'Login successfully',
-                    icon: 'success',
-                    confirmButtonText: 'Go Back'
-                })
-                state && navigate(`${state}`)
+            .then(({ user }) => {
+                const userData = { name: user.displayName, email: user.email, phone: user.phone, password: null }
+                axios.put(`https://online-shop-server-f69l.onrender.com/api/updateUser?email=${user.email}`, userData)
+                state ? navig(`${state}`) : navig(`/`)
             })
             .catch((err) => {
                 Swal.fire({
@@ -64,14 +59,26 @@ function Login() {
                             <form onSubmit={handleLogin} className="space-y-4 md:space-y-6" action="#">
                                 <div>
                                     <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900">Your email</label>
-                                    <input type="email" name="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="name@gmail.com" required />
+                                    <Space direction="horizontal" className="w-full mx-auto">
+                                    <Input size="large" type="email" name="email" id="email" placeholder="name@gmail.com" required prefix={<MailOutlined />} /> 
+                                    </Space>
                                 </div>
-                                <div>
+                                <div>                                
                                     <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900">Password</label>
-                                    <input type="password" name="password" id="password" placeholder="••••••••" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" required />
+                                    <Space direction="horizontal" className="w-full mx-auto">
+                                        <Input.Password size="large" name="password" id="password" required
+                                            placeholder="password..."
+                                            visibilityToggle={{
+                                                visible: passwordVisible,
+                                                onVisibleChange: setPasswordVisible,
+                                            }}
+                                        />
+                                    </Space>
+
                                     <p className="mt-3 text-right text-gray-500"><Link to={"/forgetPass"}>Forget password!</Link></p>
                                 </div>
-                                
+
+
                                 <div className="flex items-start">
                                     <div className="flex items-center h-5">
                                         <input id="terms" aria-describedby="terms" type="checkbox" className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300" required />
@@ -82,7 +89,7 @@ function Login() {
                                 </div>
                                 <button type="submit" className="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-primary-800">Sign In</button>
                                 <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-                                    Dont have an account? <Link to="/register" className="font-medium text-primary-600 hover:underline">Register now</Link>
+                                    Dont have an account? <Link to="/register" className="font-medium text-gray-800 hover:underline">Register now</Link>
                                 </p>
 
                                 <div className="group w-full flex justify-center items-center mt-5 h-12 px-6 border-2 border-gray-300 rounded-full transition duration-300 hover:border-blue-400 focus:bg-blue-50 active:bg-blue-100 cursor-pointer" onClick={handleGoogleSign}>
