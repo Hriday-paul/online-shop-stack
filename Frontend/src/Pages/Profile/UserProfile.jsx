@@ -49,10 +49,10 @@ function UserProfile() {
                     <div>
                         <h2 className="text-lg my-5">My Orders</h2>
                         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 items-center gap-5">
-                            <div className="flex flex-col justify-center items-center gap-y-4 border border-gray-300 py-10 rounded-md cursor-pointer hover:bg-white hover:shadow-lg duration-200 hover:border-white">
+                            <Link to="/profile/viewOrder" className="flex flex-col justify-center items-center gap-y-4 border border-gray-300 py-10 rounded-md cursor-pointer hover:bg-white hover:shadow-lg duration-200 hover:border-white">
                                 <BsCardChecklist className="text-2xl md:text-4xl"></BsCardChecklist>
                                 <h3 className="text-xl md:text-2xl font-medium font-serif text-center">View My Orders</h3>
-                            </div>
+                            </Link>
                         </div>
                     </div>
                 </div>

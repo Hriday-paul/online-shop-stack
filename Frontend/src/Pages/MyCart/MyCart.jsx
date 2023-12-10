@@ -1,17 +1,21 @@
 import { useContext } from "react"
 import { CardContext } from "../../Component/HandleContext/HandleContext"
 import { Link } from "react-router-dom";
+import { Empty } from 'antd';
 
 function MyCart() {
     const { cartProducts, deleteCart } = useContext(CardContext);
     let totalPrice = 0;
-    let allDiscount = 0
+    let allDiscount = 0;
+    let shiping = 0;
     if(cartProducts){
         for(let i = 0; i < cartProducts.length; i++){
+            shiping += 120
            allDiscount += parseInt(cartProducts[i].price)*(parseInt(cartProducts[i].discount)/100)
            totalPrice += parseInt(cartProducts[i].price)*(parseInt(cartProducts[i].discount)/100) + parseInt(cartProducts[i].price)
         }
     }
+
     return (
         <div>
             <div className="bg-gray-100 pt-20">
@@ -19,7 +23,7 @@ function MyCart() {
                 <div className="mx-auto max-w-5xl justify-center px-6 md:flex md:space-x-6 xl:px-0">
                     <div className="rounded-lg md:w-2/3">
                         {
-                            cartProducts && cartProducts.map((cart) => {
+                            cartProducts.length>0 ? cartProducts.map((cart) => {
                                 return (
                                     <div key={cart.id} className="justify-between mb-6 rounded-lg bg-white p-6 shadow-md sm:flex sm:justify-start items-center">
                                         <Link to={`/product/${cart.id}`}>
@@ -33,7 +37,7 @@ function MyCart() {
                                             <div className="mt-4 flex justify-between sm:space-y-6 sm:mt-0 sm:block sm:space-x-6">
                                                 <div className="flex items-center border-gray-100">
                                                     <span className="cursor-pointer rounded-l bg-gray-100 py-1 px-3.5 duration-100 hover:bg-orange-400 hover:text-blue-50"> - </span>
-                                                    <input className="h-8 w-8 border bg-white text-black text-center text-xs outline-none" type="number" value={cart.quantity}></input>
+                                                    <input className="h-8 w-8 text-center border text-black text-xs outline-none" type="text" value={cart.quantity}></input>
                                                     <span className="cursor-pointer rounded-r bg-gray-100 py-1 px-3 duration-100 hover:bg-orange-400 hover:text-blue-50"> + </span>
                                                 </div>
                                                 <div className="flex items-center space-x-4">
@@ -48,24 +52,29 @@ function MyCart() {
                                         </div>
                                     </div>
                                 )
-                            })
+                            }) : <Empty  />
                         }
+                        
                     </div>
 
                     <div className="mt-6 h-full rounded-lg border bg-white p-6 shadow-md md:mt-0 md:w-1/3">
                         <div className="mb-2 flex justify-between">
                             <p className="text-gray-700">Subtotal</p>
-                            <p className="text-gray-700">${totalPrice}</p>
+                            <p className="text-gray-700">${Math.ceil(totalPrice)}</p>
                         </div>
                         <div className="flex justify-between">
                             <p className="text-gray-700">Discount</p>
                             <p className="text-gray-700">${allDiscount}</p>
                         </div>
+                        <div className="flex justify-between">
+                            <p className="text-gray-700">Shiping</p>
+                            <p className="text-gray-700">${shiping}</p>
+                        </div>
                         <hr className="my-4" />
                         <div className="flex justify-between">
                             <p className="text-lg font-bold">Total</p>
                             <div className="">
-                                <p className="mb-1 text-lg font-bold">${totalPrice-allDiscount}</p>
+                                <p className="mb-1 text-lg font-bold">${Math.ceil(totalPrice-allDiscount + shiping)}</p>
                                 <p className="text-sm text-gray-700">including VAT</p>
                             </div>
                         </div>

@@ -11,7 +11,7 @@ import Product from "../Pages/Category/Product";
 import HomeCategory from "../Pages/Category/HomeCategory";
 import ProductSingle from "../Pages/ProductSingle/ProductSingle";
 import MyCart from "../Pages/MyCart/MyCart";
-import Admin from "../Pages/Admin/Admin";
+// import Admin from "../Pages/Admin/Admin";
 import Private from "../Component/Private/Private"
 import Checkout from "../Pages/Checkout/Checkout";
 import UserProfile from "../Pages/Profile/UserProfile";
@@ -23,6 +23,8 @@ import Dashboard from "../Pages/AdminCom/Dashboard/Dashboard";
 import Products from "../Pages/AdminCom/Products/Products"
 import Orders from "../Pages/AdminCom/Orders/Orders"
 import Users from "../Pages/AdminCom/Users/Users"
+import ViewOrder from "../Pages/Profile/ViewOrder/ViewOrder";
+import Test from "../Hooks/test";
 
 const Router = createBrowserRouter([
   {
@@ -78,6 +80,14 @@ const Router = createBrowserRouter([
       {
         path: "/profile/changePassword",
         element: <Private><ChangePassword></ChangePassword></Private>
+      },
+      {
+        path: "/profile/viewOrder",
+        element: <Private><ViewOrder></ViewOrder></Private>
+      },
+      {
+        path : "/test",
+        element : <Test></Test>
       }
     ]
 

@@ -58,6 +58,7 @@ function HandleContext({ children }) {
     const dataList = {
         addProductCart,
         cartProducts,
+        setCartProducts,
         getCartProduct,
         deleteCart
     }
@@ -73,8 +74,4 @@ HandleContext.propTypes = {
 }
 export default HandleContext
 
-// const [LocalIds, setLocalIds] = useState(getLocalData());
-// console.log(LocalIds)
-// await addLocalData(id);
-//     setLocalIds([...LocalIds, id]);
 

@@ -12,6 +12,7 @@
   "dependencies": {
     "@coreui/react": "^5.0.0-alpha.3",
     "@smastrom/react-rating": "^1.3.2",
+    "@tanstack/react-query": "^5.8.1",
     "antd": "^5.10.3",
     "axios": "^1.5.1",
     "firebase": "^10.5.0",

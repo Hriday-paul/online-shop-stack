@@ -52,10 +52,8 @@ function Product() {
     useEffect(() => {
         axios.get(`https://online-shop-server-f69l.onrender.com/api/categoryDataLength/${categoryName}`)
             .then(res => {
-                console.log(res.data.data)
                 setProductLength(res.data.data)
             })
-
     }, [])
 
     useEffect(() => {

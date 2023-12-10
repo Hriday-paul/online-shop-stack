@@ -7,14 +7,23 @@ import "./index.css"
 import Authonicate from "./Component/Authonicate/Authonicate";
 import HandleContext from "./Component/HandleContext/HandleContext";
 
+import {
+  QueryClient,
+  QueryClientProvider,
+} from '@tanstack/react-query'
+
+const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <Authonicate>
-      <HandleContext>
-        <RouterProvider router={Router} />
-      </HandleContext>
-    </Authonicate>
+    <QueryClientProvider client={queryClient}>
+      <Authonicate>
+        <HandleContext>
+          <RouterProvider router={Router} />
+        </HandleContext>
+      </Authonicate>
+    </QueryClientProvider>
+
 
 
   </React.StrictMode>

@@ -4,6 +4,7 @@ const router = express.Router();
 const path = require("path");
 var bodyParser = require('body-parser');
 const { getallUsers, usersLength, deleteUser } = require("../controler/Admin");
+const { uploadOrder, getUserOrder } = require("../controler/Order");
 router.use(bodyParser.json({ limit: '50mb' }));
 router.use(bodyParser.urlencoded({ limit: '50mb', extended: true }))
 
@@ -70,6 +71,14 @@ router.get("/usersLength", usersLength)
 
 //delete user
 router.delete("/deleteUser", deleteUser);
+
+
+//handle product order
+
+router.put("/addOrder", uploadOrder);
+
+//get order by user
+router.get("/getOrder", getUserOrder)
 
 
 
